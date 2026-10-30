@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candy Drink Tycoon</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(145deg, #0878d8, #17275e);
+  color: white;
+  text-align: center;
+}
+
+header {
+  background: linear-gradient(90deg, #ffd447, #fff0a0);
+  color: #17366e;
+  padding: 22px 8px;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 8px;
+  background: #103d80;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.shop {
+  background: #fff1b8;
+  color: #18366c;
+  margin: 16px 12px;
+  padding: 19px 12px;
+  border-radius: 20px;
+  box-shadow: 0 5px 0 #d8a42d;
+}
+
+.item {
+  font-size: 65px;
+  margin: 12px;
+}
+
+button {
+  background: #ffc936;
+  color: #17366e;
+  border: 2px solid #e0a820;
+  border-radius: 13px;
+  padding: 14px 18px;
+  margin: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.info {
+  background: #174a91;
+  margin: 15px 12px;
+  padding: 16px;
+  border-radius: 15px;
+}
+
+footer {
+  padding: 25px;
+  font-size: 13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+🥤 CANDY DRINK TYCOON 🍬
+<div style="font-size:14px;margin-top:7px">
+BUILD YOUR DREAM CANDY SHOP!
+</div>
+</header>
+
+<div class="stats">
+  <div>💰 $<span id="money">50</span></div>
+  <div>⭐ Level <span id="level">1</span></div>
+  <div>👥 <span id="customers">0</span></div>
+</div>
+
+<div class="shop">
+  <h2>🥤 DRINK SHOP</h2>
+  <div class="item">🧋</div>
+  <p>Sell delicious drinks!</p>
+  <p>Earn $<span id="drinkPrice">5</span> each</p>
+  <button onclick="sell('drink')">
+    SELL DRINK
+  </button>
+</div>
+
+<div class="shop">
+  <h2>🍬 CANDY SHOP</h2>
+  <div class="item">🍭</div>
+  <p>Sell sweet candy!</p>
+  <p>Earn $<span id="candyPrice">3</span> each</p>
+  <button onclick="sell('candy')">
+    SELL CANDY
+  </button>
+</div>
+
+<div class="shop">
+  <h2>🍿 SNACK SHOP</h2>
+  <div class="item">🍿</div>
+  <p>Sell tasty snacks!</p>
+  <p>Earn $<span id="snackPrice">4</span> each</p>
+  <button onclick="sell('snack')">
+    SELL SNACK
+  </button>
+</div>
+
+<div class="shop">
+  <h2>🏪 SHOP UPGRADES</h2>
+  <div class="item">🏬</div>
+  <p>Upgrade your shop to earn more money!</p>
+  <p>Upgrade level: <span id="upgrade">1</span></p>
+  <p>Upgrade cost: $<span id="upgradeCost">50</span></p>
+  <button id="upgradeButton" onclick="upgradeShop()">
+    UPGRADE SHOP
+  </button>
+</div>
+
+<div class="info">
+  <h2>📊 BUSINESS REPORT</h2>
+  <p>Total sales: <span id="sales">0</span></p>
+  <p>Money multiplier: x<span id="multiplier">1</span></p>
+  <p id="message">Welcome to your new business!</p>
+</div>
+
+<div class="shop">
+  <h2>💾 YOUR GAME</h2>
+  <p>Your progress saves automatically on this device.</p>
+  <button onclick="resetGame()">
+    RESET GAME
+  </button>
+</div>
+
+<footer>
+  CANDY DRINK TYCOON © 2026
+  <p>Thanks for playing! 🥤🍬</p>
+</footer>
+
+<script>
+
+const defaultState = {
+  money: 50,
+  level: 1,
+  customers: 0,
+  sales: 0,
+  upgrade: 1
+};
+
+let state = {...defaultState};
+
+try {
+  const saved = localStorage.getItem("candyTycoonSave");
+  if (saved) {
+    const data = JSON.parse(saved);
+    if (
+      data &&
+      ["money", "level", "customers", "sales", "upgrade"]
+        .every(key => Number.isFinite(data[key]) && data[key] >= 0)
+    ) {
+      state = {...defaultState, ...data};
+    }
+  }
+} catch (error) {
+  state = {...defaultState};
+}
+
+const products = {
+  drink: {
+    price: 5,
+    name: "drink"
+  },
+  candy: {
+    price: 3,
+    name: "candy"
+  },
+  snack: {
+    price: 4,
+    name: "snack"
+  }
+};
+
+function saveGame() {
+  try {
+    localStorage.setItem(
+      "candyTycoonSave",
+      JSON.stringify(state)
+    );
+  } catch (error) {
+    document.getElementById("message").textContent =
+      "Saving is unavailable in this browser.";
+  }
+}
+
+function render() {
+  document.getElementById("money").textContent =
+    state.money;
+
+  document.getElementById("level").textContent =
+    state.level;
+
+  document.getElementById("customers").textContent =
+    state.customers;
+
+  document.getElementById("sales").textContent =
+    state.sales;
+
+  document.getElementById("upgrade").textContent =
+    state.upgrade;
+
+  document.getElementById("multiplier").textContent =
+    state.upgrade;
+
+  document.getElementById("drinkPrice").textContent =
+    products.drink.price * state.upgrade;
+
+  document.getElementById("candyPrice").textContent =
+    products.candy.price * state.upgrade;
+
+  document.getElementById("snackPrice").textContent =
+    products.snack.price * state.upgrade;
+
+  document.getElementById("upgradeCost").textContent =
+    50 * state.upgrade;
+
+  document.getElementById("upgradeButton").disabled =
+    state.money < 50 * state.upgrade;
+}
+
+function sell(product) {
+  if (!products[product]) return;
+
+  const earnings =
+    products[product].price * state.upgrade;
+
+  state.money += earnings;
+  state.customers++;
+  state.sales++;
+
+  state.level =
+    Math.floor(state.sales / 10) + 1;
+
+  document.getElementById("message").textContent =
+    "You sold a " + products[product].name +
+    " and earned $" + earnings + "!";
+
+  saveGame();
+  render();
+}
+
+function upgradeShop() {
+  const cost = 50 * state.upgrade;
+
+  if (state.money < cost) {
+    document.getElementById("message").textContent =
+      "You need more money for this upgrade!";
+    return;
+  }
+
+  state.money -= cost;
+  state.upgrade++;
+
+  document.getElementById("message").textContent =
+    "Congratulations! Your shop is upgraded!";
+
+  saveGame();
+  render();
+}
+
+function resetGame() {
+  if (!confirm("Are you sure you want to restart your game?")) {
+    return;
+  }
+
+  state = {...defaultState};
+
+  saveGame();
+
+  document.getElementById("message").textContent =
+    "Your new business adventure starts now!";
+
+  render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
