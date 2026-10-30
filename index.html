@@ -1,316 +1,429 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Candy Drink Tycoon</title>
+<meta name="theme-color" content="#071b40">
+<title>Royal Blue Tycoon</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(145deg, #0878d8, #17275e);
+  background: linear-gradient(145deg,#06152e,#103e80,#07152e);
   color: white;
-  text-align: center;
+  font-family: Arial,sans-serif;
 }
 
 header {
-  background: linear-gradient(90deg, #ffd447, #fff0a0);
-  color: #17366e;
-  padding: 22px 8px;
-  font-size: 25px;
-  font-weight: 900;
+  text-align: center;
+  padding: 24px 10px;
+  background: linear-gradient(110deg,#07152e,#1256a5);
+  border-bottom: 3px solid #e9b936;
+}
+
+header h1 {
+  color: #ffd34d;
+  font-size: 27px;
+  margin: 5px;
+  text-shadow: 0 2px 8px #000;
+}
+
+header p {
+  color: #d9eaff;
+  margin: 8px;
 }
 
 .stats {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 16px 8px;
-  background: #103d80;
-  font-size: 16px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 7px;
+  padding: 12px;
+  background: #081e43;
+  text-align: center;
+}
+
+.stat {
+  background: #123b70;
+  border: 1px solid #d7aa38;
+  border-radius: 12px;
+  padding: 12px 4px;
   font-weight: bold;
+  font-size: 14px;
+}
+
+.stat strong {
+  display: block;
+  color: #ffd34d;
+  font-size: 19px;
+  margin-top: 5px;
+}
+
+main { padding: 10px; }
+
+.section-title {
+  color: #ffd34d;
+  text-align: center;
+  margin: 25px 0 12px;
+  font-size: 21px;
 }
 
 .shop {
-  background: #fff1b8;
-  color: #18366c;
-  margin: 16px 12px;
-  padding: 19px 12px;
-  border-radius: 20px;
-  box-shadow: 0 5px 0 #d8a42d;
+  background: linear-gradient(145deg,#173e72,#0c2850);
+  border: 2px solid #cba33e;
+  border-radius: 17px;
+  padding: 17px;
+  margin: 13px 0;
+  text-align: center;
+  box-shadow: 0 5px 15px #0006;
 }
 
-.item {
+.shop h2 {
+  color: #ffd34d;
+  margin: 5px;
+}
+
+.product {
   font-size: 65px;
   margin: 12px;
 }
 
+.shop p { color: #dceaff; }
+
 button {
-  background: #ffc936;
-  color: #17366e;
-  border: 2px solid #e0a820;
-  border-radius: 13px;
-  padding: 14px 18px;
-  margin: 6px;
-  font-size: 16px;
-  font-weight: bold;
+  background: linear-gradient(135deg,#ffe28a,#dca928);
+  color: #10294e;
+  border: 1px solid #fff0b0;
+  border-radius: 11px;
+  padding: 13px 17px;
+  margin: 5px;
+  font-weight: 900;
+  font-size: 15px;
   cursor: pointer;
 }
 
-button:active {
-  transform: scale(.96);
-}
+button:active { transform: scale(.96); }
 
 button:disabled {
-  opacity: .5;
+  opacity: .45;
   cursor: not-allowed;
 }
 
-.info {
-  background: #174a91;
-  margin: 15px 12px;
-  padding: 16px;
+.secondary {
+  background: linear-gradient(135deg,#398de0,#1452a0);
+  color: white;
+  border-color: #9ccaff;
+}
+
+.locked {
+  opacity: .7;
+  border-style: dashed;
+}
+
+.panel {
+  background: #0b2851;
+  border: 1px solid #d5ad48;
   border-radius: 15px;
+  padding: 17px;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.panel h2 { color: #ffd34d; }
+
+#message {
+  color: #ffe18a;
+  min-height: 24px;
+  font-weight: bold;
 }
 
 footer {
+  text-align: center;
   padding: 25px;
+  color: #b9d5f5;
   font-size: 13px;
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-🥤 CANDY DRINK TYCOON 🍬
-<div style="font-size:14px;margin-top:7px">
-BUILD YOUR DREAM CANDY SHOP!
-</div>
+  <div style="font-size:35px">👑</div>
+  <h1>ROYAL BLUE TYCOON</h1>
+  <p>BUILD YOUR OWN BUSINESS EMPIRE</p>
 </header>
 
 <div class="stats">
-  <div>💰 $<span id="money">50</span></div>
-  <div>⭐ Level <span id="level">1</span></div>
-  <div>👥 <span id="customers">0</span></div>
+  <div class="stat">
+    💰 MONEY
+    <strong id="money">$100</strong>
+  </div>
+  <div class="stat">
+    ⭐ LEVEL
+    <strong id="level">1</strong>
+  </div>
+  <div class="stat">
+    👥 CUSTOMERS
+    <strong id="customers">0</strong>
+  </div>
+</div>
+
+<main>
+
+<h2 class="section-title">🏬 YOUR BUSINESS</h2>
+
+<div class="shop">
+  <h2>🥤 ROYAL DRINKS</h2>
+  <div class="product">🥤</div>
+  <p>Sell refreshing drinks to customers.</p>
+  <p>Earn $<span id="drinkValue">5</span> per sale</p>
+  <button onclick="sell('drink')">SELL DRINK</button>
 </div>
 
 <div class="shop">
-  <h2>🥤 DRINK SHOP</h2>
-  <div class="item">🧋</div>
-  <p>Sell delicious drinks!</p>
-  <p>Earn $<span id="drinkPrice">5</span> each</p>
-  <button onclick="sell('drink')">
-    SELL DRINK
-  </button>
+  <h2>🍬 CANDY CENTRAL</h2>
+  <div class="product">🍬</div>
+  <p>Sell candy and sweet treats.</p>
+  <p>Earn $<span id="candyValue">4</span> per sale</p>
+  <button onclick="sell('candy')">SELL CANDY</button>
 </div>
 
 <div class="shop">
-  <h2>🍬 CANDY SHOP</h2>
-  <div class="item">🍭</div>
-  <p>Sell sweet candy!</p>
-  <p>Earn $<span id="candyPrice">3</span> each</p>
-  <button onclick="sell('candy')">
-    SELL CANDY
-  </button>
+  <h2>🍿 SNACK STATION</h2>
+  <div class="product">🍿</div>
+  <p>Sell delicious snacks.</p>
+  <p>Earn $<span id="snackValue">6</span> per sale</p>
+  <button onclick="sell('snack')">SELL SNACK</button>
 </div>
+
+<h2 class="section-title">🏆 BUSINESS UPGRADES</h2>
 
 <div class="shop">
-  <h2>🍿 SNACK SHOP</h2>
-  <div class="item">🍿</div>
-  <p>Sell tasty snacks!</p>
-  <p>Earn $<span id="snackPrice">4</span> each</p>
-  <button onclick="sell('snack')">
-    SELL SNACK
-  </button>
+  <div class="product">🏢</div>
+  <h2>UPGRADE YOUR BUSINESS</h2>
+  <p>Increase the money you earn from every sale.</p>
+  <p>Upgrade level: <strong id="upgradeLevel">1</strong></p>
+  <p>Next upgrade: $<span id="upgradeCost">75</span></p>
+  <button id="upgradeButton" onclick="upgrade()">UPGRADE BUSINESS</button>
 </div>
 
-<div class="shop">
-  <h2>🏪 SHOP UPGRADES</h2>
-  <div class="item">🏬</div>
-  <p>Upgrade your shop to earn more money!</p>
-  <p>Upgrade level: <span id="upgrade">1</span></p>
-  <p>Upgrade cost: $<span id="upgradeCost">50</span></p>
-  <button id="upgradeButton" onclick="upgradeShop()">
-    UPGRADE SHOP
-  </button>
+<h2 class="section-title">🔓 UNLOCK NEW STORES</h2>
+
+<div class="shop" id="pizzaShop">
+  <div class="product">🍕</div>
+  <h2>PIZZA PALACE</h2>
+  <p id="pizzaDescription">Unlock a new pizza business!</p>
+  <button id="pizzaButton" onclick="unlock('pizza')">UNLOCK - $250</button>
+  <div id="pizzaControls" hidden>
+    <p>Earn $15 per sale</p>
+    <button onclick="sell('pizza')">SELL PIZZA</button>
+  </div>
 </div>
 
-<div class="info">
+<div class="shop" id="burgerShop">
+  <div class="product">🍔</div>
+  <h2>BURGER FACTORY</h2>
+  <p id="burgerDescription">Build your burger business!</p>
+  <button id="burgerButton" onclick="unlock('burger')">UNLOCK - $500</button>
+  <div id="burgerControls" hidden>
+    <p>Earn $25 per sale</p>
+    <button onclick="sell('burger')">SELL BURGER</button>
+  </div>
+</div>
+
+<div class="panel">
   <h2>📊 BUSINESS REPORT</h2>
-  <p>Total sales: <span id="sales">0</span></p>
-  <p>Money multiplier: x<span id="multiplier">1</span></p>
-  <p id="message">Welcome to your new business!</p>
+  <p>Total sales: <strong id="sales">0</strong></p>
+  <p>Business multiplier: x<strong id="multiplier">1</strong></p>
+  <p id="message">Welcome to your business empire!</p>
 </div>
 
-<div class="shop">
-  <h2>💾 YOUR GAME</h2>
-  <p>Your progress saves automatically on this device.</p>
-  <button onclick="resetGame()">
-    RESET GAME
-  </button>
+<div class="panel">
+  <h2>💾 GAME PROGRESS</h2>
+  <p>Your progress saves automatically in this browser.</p>
+  <button class="secondary" onclick="saveGame()">SAVE GAME</button>
+  <button class="secondary" onclick="resetGame()">RESET GAME</button>
 </div>
+
+</main>
 
 <footer>
-  CANDY DRINK TYCOON © 2026
-  <p>Thanks for playing! 🥤🍬</p>
+  ROYAL BLUE TYCOON
+  <p>BUILD IT. UPGRADE IT. OWN THE EMPIRE. 👑</p>
 </footer>
 
 <script>
-
-const defaultState = {
-  money: 50,
+const defaults = {
+  money: 100,
   level: 1,
   customers: 0,
   sales: 0,
-  upgrade: 1
+  upgrade: 1,
+  pizza: false,
+  burger: false
 };
 
-let state = {...defaultState};
+let game = {...defaults};
 
-try {
-  const saved = localStorage.getItem("candyTycoonSave");
-  if (saved) {
-    const data = JSON.parse(saved);
-    if (
-      data &&
-      ["money", "level", "customers", "sales", "upgrade"]
-        .every(key => Number.isFinite(data[key]) && data[key] >= 0)
-    ) {
-      state = {...defaultState, ...data};
+function loadGame() {
+  try {
+    const saved = localStorage.getItem("royalBlueTycoon");
+    if (saved) {
+      const data = JSON.parse(saved);
+
+      if (
+        data &&
+        ["money","level","customers","sales","upgrade"]
+        .every(k => Number.isSafeInteger(data[k]) && data[k] >= 0) &&
+        typeof data.pizza === "boolean" &&
+        typeof data.burger === "boolean" &&
+        data.upgrade >= 1 &&
+        data.level >= 1
+      ) {
+        game = {...defaults,...data};
+      }
     }
+  } catch (e) {
+    game = {...defaults};
   }
-} catch (error) {
-  state = {...defaultState};
 }
-
-const products = {
-  drink: {
-    price: 5,
-    name: "drink"
-  },
-  candy: {
-    price: 3,
-    name: "candy"
-  },
-  snack: {
-    price: 4,
-    name: "snack"
-  }
-};
 
 function saveGame() {
   try {
     localStorage.setItem(
-      "candyTycoonSave",
-      JSON.stringify(state)
+      "royalBlueTycoon",
+      JSON.stringify(game)
     );
-  } catch (error) {
-    document.getElementById("message").textContent =
-      "Saving is unavailable in this browser.";
+    return true;
+  } catch (e) {
+    showMessage("Saving is unavailable in this browser.");
+    return false;
   }
+}
+
+const prices = {
+  drink: 5,
+  candy: 4,
+  snack: 6,
+  pizza: 15,
+  burger: 25
+};
+
+function showMessage(message) {
+  document.getElementById("message").textContent = message;
+}
+
+function sell(item) {
+  if (!(item in prices)) return;
+
+  if (item === "pizza" && !game.pizza) return;
+  if (item === "burger" && !game.burger) return;
+
+  const earnings = prices[item] * game.upgrade;
+
+  game.money += earnings;
+  game.sales++;
+  game.customers++;
+  game.level = Math.floor(game.sales / 10) + 1;
+
+  showMessage("Sale complete! You earned $" + earnings + "!");
+
+  saveGame();
+  render();
+}
+
+function upgrade() {
+  const cost = 75 * game.upgrade;
+
+  if (game.money < cost) {
+    showMessage("You need more money for this upgrade!");
+    return;
+  }
+
+  game.money -= cost;
+  game.upgrade++;
+
+  showMessage("Business upgraded! Your sales are worth more!");
+
+  saveGame();
+  render();
+}
+
+function unlock(item) {
+  const costs = {
+    pizza: 250,
+    burger: 500
+  };
+
+  if (!(item in costs) || game[item]) return;
+
+  if (item === "burger" && !game.pizza) {
+    showMessage("Unlock Pizza Palace first!");
+    return;
+  }
+
+  if (game.money < costs[item]) {
+    showMessage("You need more money to unlock this store!");
+    return;
+  }
+
+  game.money -= costs[item];
+  game[item] = true;
+
+  showMessage("Congratulations! You unlocked a new store!");
+
+  saveGame();
+  render();
 }
 
 function render() {
-  document.getElementById("money").textContent =
-    state.money;
+  document.getElementById("money").textContent = game.money;
+  document.getElementById("level").textContent = game.level;
+  document.getElementById("customers").textContent = game.customers;
+  document.getElementById("sales").textContent = game.sales;
+  document.getElementById("upgradeLevel").textContent = game.upgrade;
+  document.getElementById("multiplier").textContent = game.upgrade;
 
-  document.getElementById("level").textContent =
-    state.level;
-
-  document.getElementById("customers").textContent =
-    state.customers;
-
-  document.getElementById("sales").textContent =
-    state.sales;
-
-  document.getElementById("upgrade").textContent =
-    state.upgrade;
-
-  document.getElementById("multiplier").textContent =
-    state.upgrade;
-
-  document.getElementById("drinkPrice").textContent =
-    products.drink.price * state.upgrade;
-
-  document.getElementById("candyPrice").textContent =
-    products.candy.price * state.upgrade;
-
-  document.getElementById("snackPrice").textContent =
-    products.snack.price * state.upgrade;
+  document.getElementById("drinkValue").textContent = 5 * game.upgrade;
+  document.getElementById("candyValue").textContent = 4 * game.upgrade;
+  document.getElementById("snackValue").textContent = 6 * game.upgrade;
 
   document.getElementById("upgradeCost").textContent =
-    50 * state.upgrade;
+    75 * game.upgrade;
 
   document.getElementById("upgradeButton").disabled =
-    state.money < 50 * state.upgrade;
-}
+    game.money < 75 * game.upgrade;
 
-function sell(product) {
-  if (!products[product]) return;
+  document.getElementById("pizzaButton").hidden = game.pizza;
+  document.getElementById("pizzaControls").hidden = !game.pizza;
+  document.getElementById("pizzaDescription").textContent =
+    game.pizza ? "Your pizza store is open!" : "Unlock a new pizza business!";
 
-  const earnings =
-    products[product].price * state.upgrade;
+  document.getElementById("burgerButton").hidden = game.burger;
+  document.getElementById("burgerControls").hidden = !game.burger;
+  document.getElementById("burgerDescription").textContent =
+    game.burger ? "Your burger store is open!" : "Build your burger business!";
 
-  state.money += earnings;
-  state.customers++;
-  state.sales++;
+  document.getElementById("pizzaButton").disabled =
+    game.money < 250;
 
-  state.level =
-    Math.floor(state.sales / 10) + 1;
-
-  document.getElementById("message").textContent =
-    "You sold a " + products[product].name +
-    " and earned $" + earnings + "!";
-
-  saveGame();
-  render();
-}
-
-function upgradeShop() {
-  const cost = 50 * state.upgrade;
-
-  if (state.money < cost) {
-    document.getElementById("message").textContent =
-      "You need more money for this upgrade!";
-    return;
-  }
-
-  state.money -= cost;
-  state.upgrade++;
-
-  document.getElementById("message").textContent =
-    "Congratulations! Your shop is upgraded!";
-
-  saveGame();
-  render();
+  document.getElementById("burgerButton").disabled =
+    game.money < 500 || !game.pizza;
 }
 
 function resetGame() {
-  if (!confirm("Are you sure you want to restart your game?")) {
-    return;
-  }
+  if (!confirm("Reset all your business progress?")) return;
 
-  state = {...defaultState};
-
+  game = {...defaults};
   saveGame();
-
-  document.getElementById("message").textContent =
-    "Your new business adventure starts now!";
-
+  showMessage("Your new business empire starts now!");
   render();
 }
 
+loadGame();
 render();
-
 </script>
 
 </body>
